@@ -1,0 +1,130 @@
+<section class="container">
+  <div class="block">
+    <h2>Hola</h2>
+    <img src="/imagen.jpg" alt="gato" />
+    <div class="link">
+      <a class="btn fijo" id="btnSi" href="#">Si</a>
+      <a class="btn derecho" id="btnNo" href="#">No</a>
+    </div>
+  </div>
+</section>
+<!-- Modal -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <p>
+      Gracias Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ut error
+      deleniti fugiat ad voluptate, dolor ab dolorum quis nesciunt rerum commodi
+      porro. Ab ut fugit, maiores perferendis dignissimos eveniet sapiente.
+    </p>
+    <button id="closeModal">Aceptar</button>
+  </div>
+</div>
+
+<style>
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  img {
+    height: 200px;
+    width: auto;
+  }
+  .link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    position: relative;
+  }
+  .btn {
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: yellow;
+    border-radius: 5%;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+  }
+  #btnSi {
+    position: relative;
+    left: -25%;
+  }
+  #btnNo {
+    position: fixed;
+    left: 50%; /* Se inicia a la derecha del "Sí" */
+  }
+  /* MODAL */
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+  }
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+  }
+  #closeModal {
+    margin-top: 10px;
+    padding: 5px 15px;
+    background: yellow;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+  }
+</style>
+
+<script>
+  const btnNo = document.getElementById("btnNo");
+
+  btnNo.addEventListener("mouseenter", () => {
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    const btnWidth = btnNo.offsetWidth;
+    const btnHeight = btnNo.offsetHeight;
+
+    let randomX = Math.random() * (viewportWidth - btnWidth);
+    let randomY = Math.random() * (viewportHeight - btnHeight);
+
+    // Evitar que el "No" se superponga con el "Sí"
+    const btnSi = document.getElementById("btnSi").getBoundingClientRect();
+    const btnNoNewPos = { left: randomX, top: randomY };
+
+    if (
+      randomX > btnSi.left - btnWidth &&
+      randomX < btnSi.right + btnWidth &&
+      randomY > btnSi.top - btnHeight &&
+      randomY < btnSi.bottom + btnHeight
+    ) {
+      randomX = Math.random() * (viewportWidth - btnWidth);
+      randomY = Math.random() * (viewportHeight - btnHeight);
+    }
+
+    btnNo.style.left = `${randomX}px`;
+    btnNo.style.top = `${randomY}px`;
+  });
+
+  // 🛑 Mostrar el modal cuando presionan "No"
+  btnSi.addEventListener("click", () => {
+    modal.style.display = "flex";
+  });
+
+  // 🔘 Cerrar el modal
+  closeModal.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+</script>
