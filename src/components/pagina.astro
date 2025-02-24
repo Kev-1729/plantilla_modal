@@ -1,6 +1,6 @@
 <section class="container">
   <div class="block">
-    <h2>Hola</h2>
+    <h2>¡Ingenieria de Software es la mejor ingenieria!</h2>
     <img src="/imagen.jpg" alt="gato" />
     <div class="link">
       <a class="btn fijo" id="btnSi" href="#">Si</a>
@@ -11,11 +11,7 @@
 <!-- Modal -->
 <div id="modal" class="modal">
   <div class="modal-content">
-    <p>
-      Gracias Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ut error
-      deleniti fugiat ad voluptate, dolor ab dolorum quis nesciunt rerum commodi
-      porro. Ab ut fugit, maiores perferendis dignissimos eveniet sapiente.
-    </p>
+    <p>Que fue causa</p>
     <button id="closeModal">Aceptar</button>
   </div>
 </div>
@@ -46,10 +42,10 @@
   .btn {
     margin: 10px;
     padding: 10px 20px;
-    background-color: yellow;
+    background-color: black;
     border-radius: 5%;
     text-decoration: none;
-    color: black;
+    color: white;
     font-weight: bold;
   }
   #btnSi {
@@ -89,42 +85,48 @@
 </style>
 
 <script>
-  const btnNo = document.getElementById("btnNo");
+  document.addEventListener("DOMContentLoaded", function () {
+    var btnNo = document.getElementById("btnNo") as HTMLAnchorElement | null;
+    var btnSi = document.getElementById("btnSi") as HTMLAnchorElement | null;
+    var modal = document.getElementById("modal") as HTMLDivElement | null;
+    var closeModal = document.getElementById(
+      "closeModal"
+    ) as HTMLButtonElement | null;
 
-  btnNo.addEventListener("mouseenter", () => {
-    const viewportWidth = window.innerWidth;
-    const viewportHeight = window.innerHeight;
-    const btnWidth = btnNo.offsetWidth;
-    const btnHeight = btnNo.offsetHeight;
+    if (btnNo && btnSi && modal && closeModal) {
+      btnNo.addEventListener("mouseenter", function () {
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        const btnWidth = btnNo.offsetWidth;
+        const btnHeight = btnNo.offsetHeight;
 
-    let randomX = Math.random() * (viewportWidth - btnWidth);
-    let randomY = Math.random() * (viewportHeight - btnHeight);
+        let randomX = Math.random() * (viewportWidth - btnWidth);
+        let randomY = Math.random() * (viewportHeight - btnHeight);
 
-    // Evitar que el "No" se superponga con el "Sí"
-    const btnSi = document.getElementById("btnSi").getBoundingClientRect();
-    const btnNoNewPos = { left: randomX, top: randomY };
+        // Evitar superposición con "Sí"
+        const btnSiRect = btnSi.getBoundingClientRect();
 
-    if (
-      randomX > btnSi.left - btnWidth &&
-      randomX < btnSi.right + btnWidth &&
-      randomY > btnSi.top - btnHeight &&
-      randomY < btnSi.bottom + btnHeight
-    ) {
-      randomX = Math.random() * (viewportWidth - btnWidth);
-      randomY = Math.random() * (viewportHeight - btnHeight);
+        if (
+          randomX > btnSiRect.left - btnWidth &&
+          randomX < btnSiRect.right + btnWidth &&
+          randomY > btnSiRect.top - btnHeight &&
+          randomY < btnSiRect.bottom + btnHeight
+        ) {
+          randomX = Math.random() * (viewportWidth - btnWidth);
+          randomY = Math.random() * (viewportHeight - btnHeight);
+        }
+
+        btnNo.style.left = `${randomX}px`;
+        btnNo.style.top = `${randomY}px`;
+      });
+
+      btnSi.addEventListener("click", function () {
+        modal.style.display = "flex";
+      });
+
+      closeModal.addEventListener("click", function () {
+        modal.style.display = "none";
+      });
     }
-
-    btnNo.style.left = `${randomX}px`;
-    btnNo.style.top = `${randomY}px`;
-  });
-
-  // 🛑 Mostrar el modal cuando presionan "No"
-  btnSi.addEventListener("click", () => {
-    modal.style.display = "flex";
-  });
-
-  // 🔘 Cerrar el modal
-  closeModal.addEventListener("click", () => {
-    modal.style.display = "none";
   });
 </script>
